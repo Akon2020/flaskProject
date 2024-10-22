@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 
-{% block title %}A Propos{% endblock %}
+{% block title %}Utilité{% endblock %}
 
 {% block container_fluid %}
-<h1 class="h3 mb-4 text-gray-800">Utilité</h1>
+<div class="container-fluid">
+    <!-- Section Title -->
+    <h1 class="h3 mb-4 text-gray-800">Utilité</h1>
+
+    <!-- Main Content Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white font-weight-bold">
+                    <p class="card-title mb-0">Envoyer votre document pour l'analyse</p>
+                </div>
+                <div class="card-body">
+                    <form id="basic-form" class="newsletter-form" method="post" novalidate>
+                        <div class="form-group">
+                            <label for="titre" class="font-weight-bold">Titre de la newsletter</label>
+                            <input type="text" name="titre" class="form-control" placeholder="Entrez le titre ici" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="document" class="font-weight-bold">Documents à télécharger</label>
+                            <small class="form-text text-muted">Seul le format CSV est autorisé</small>
+                            <input type="file" class="dropify" data-allowed-file-extensions="csv" name="document" required/>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
