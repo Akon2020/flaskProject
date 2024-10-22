@@ -3,6 +3,12 @@
 {% block title %}Utilité{% endblock %}
 
 {% block container_fluid %}
+<style>
+    table.table-striped th {
+        text-align: left;
+    }
+</style>
+
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">Utilité</h1>
     <div class="row">
@@ -18,7 +24,7 @@
                             <input type="text" name="titre" class="form-control" placeholder="Entrez le titre ici" required />
                         </div>
                         <div class="form-group">
-                            <label for="document" class="font-weight-bold">Documents à télécharger</label>
+                            <label for="document" class="font-weight-bold">Document pour la visualisation</label>
                             <small class="form-text text-muted">Seul le format CSV est autorisé</small>
                             <input type="file" class="dropify" data-allowed-file-extensions="csv" name="document" required />
                         </div>
