@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block
-container_fluid %}
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}^
+
+{% block container_fluid %}
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -22,7 +25,7 @@ container_fluid %}
               <div
                 class="text-xs font-weight-bold text-primary text-uppercase mb-1"
               >
-                Montant total des transactions
+                Chiffre d'affaire total
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
             </div>
@@ -64,7 +67,7 @@ container_fluid %}
               <div
                 class="text-xs font-weight-bold text-info text-uppercase mb-1"
               >
-                Pourcentage ventes
+                Debut et fin de la periode
               </div>
               <div class="row no-gutters align-items-center">
                 <div class="col-auto">
@@ -94,28 +97,6 @@ container_fluid %}
       </div>
     </div>
 
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-warning shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div
-                class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-              >
-                Pending Requests
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-comments fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Content Row -->
 
   <div class="row">
@@ -127,7 +108,7 @@ container_fluid %}
           class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
         >
           <h6 class="m-0 font-weight-bold text-primary">
-            Graphique chiffre d'affaire
+            Graphique des ventes
           </h6>
           <div class="dropdown no-arrow">
             <a
@@ -224,7 +205,9 @@ container_fluid %}
       <!-- Project Card Example -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Pourcentage des produits les plus vendus</h6>
+          <h6 class="m-0 font-weight-bold text-primary">
+            Pourcentage des produits les plus vendus
+          </h6>
         </div>
         <div class="card-body">
           <h4 class="small font-weight-bold">
