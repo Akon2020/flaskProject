@@ -20,9 +20,29 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 def home():
     return render_template('home.html')
 
+def get_last_uploaded_file():
+    files = [f for f in os.listdir(app.config['UPLOAD_FOLDER']) if allowed_file(f)]
+    if not files:
+        return None
+    latest_file = max([os.path.join(app.config['UPLOAD_FOLDER'], f) for f in files], key=os.path.getctime)
+    return latest_file
 @app.route('/dashboard')
 def dashboard():
-    return render_template('index.html')
+    # fichier_defaut = os.path.join(app.config['UPLOAD_FOLDER'], 'dataTest.csv')
+    fichier_defaut = get_last_uploaded_file()
+    if fichier_defaut is None:
+        return render_template('index.html', plot_url=None)
+
+    if os.path.exists(fichier_defaut):
+        data = pd.read_csv(fichier_defaut)
+        fig, ax = plt.subplots()
+        data.plot(ax=ax)
+        img = io.BytesIO()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+        return render_template('index.html', plot_url=f'data:image/png;base64,{plot_url}')
+    return render_template('index.html', plot_url=None)
 
 @app.route('/utilite', methods=['GET', 'POST'])
 def info():
@@ -41,7 +61,6 @@ def info():
             plt.savefig(img, format='png')
             img.seek(0)
             plot_url = base64.b64encode(img.getvalue()).decode('utf8')
-
             return render_template('utilite.html', titre=titre, tables=tables, plot_url=f'data:image/png;base64,{plot_url}')
 
     return render_template('utilite.html')

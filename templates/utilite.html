@@ -38,20 +38,23 @@
     {% if tables %}
     <div class="row">
         <div class="col-md-12">
-            <h3>Contenu du fichier CSV</h3>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>Contenue du fichier CSV du fichier <b>{{ titre }}</b></h3>
+                <a href="/dashboard" class="btn btn-success">Voir les détails</a>
+            </div>
             <div>{{ tables | safe }}</div>
         </div>
     </div>
     {% endif %}
 
-    {% if plot_url %}
+    <!-- {% if plot_url %}
     <div class="row">
         <div class="col-md-12 mb-5">
             <h3>Visualisation des données</h3>
             <img src="{{ plot_url }}" alt="Visualisation des données" class="img-fluid" />
         </div>
     </div>
-    {% endif %}
+    {% endif %} -->
 
 </div>
 {% endblock %}
