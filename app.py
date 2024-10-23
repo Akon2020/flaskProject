@@ -1,10 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
+# from sklearn import metricsfrom sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
+from sklearn import metrics
 import os
 from werkzeug.utils import secure_filename
 import io
 import base64
+import matplotlib
+matplotlib.use('Agg')
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -26,6 +37,7 @@ def get_last_uploaded_file():
         return None
     latest_file = max([os.path.join(app.config['UPLOAD_FOLDER'], f) for f in files], key=os.path.getctime)
     return latest_file
+
 @app.route('/dashboard')
 def dashboard():
     # fichier_defaut = os.path.join(app.config['UPLOAD_FOLDER'], 'dataTest.csv')
@@ -35,12 +47,20 @@ def dashboard():
 
     if os.path.exists(fichier_defaut):
         data = pd.read_csv(fichier_defaut)
-        fig, ax = plt.subplots()
-        data.plot(ax=ax)
+        data['date_vente'] = pd.to_datetime(data['date_vente'], format='%d/%m/%Y', errors='coerce')
+        data = data.dropna(subset=['date_vente'])
+        data.set_index('date_vente', inplace=True)
+        # data.set_index('date_vente').resample('M').sum()['prix_total_de_vente'].plot(figsize=(10,6))
+        plt.title('Distribution des prix unitaires de vente')
+        plt.xlabel('Prix Unitaire de Vente')
+        plt.ylabel('Fréquence')
+        
+        # data.plot(ax=ax)
         img = io.BytesIO()
         plt.savefig(img, format='png')
         img.seek(0)
         plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+        
         return render_template('index.html', plot_url=f'data:image/png;base64,{plot_url}')
     return render_template('index.html', plot_url=None)
 
