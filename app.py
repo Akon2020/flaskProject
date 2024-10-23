@@ -24,7 +24,7 @@ def home():
 def dashboard():
     return render_template('index.html')
 
-@app.route('/info', methods=['GET', 'POST'])
+@app.route('/utilite', methods=['GET', 'POST'])
 def info():
     if request.method == 'POST':
         titre = request.form['titre']
