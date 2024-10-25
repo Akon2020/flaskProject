@@ -47,20 +47,18 @@ def dashboard():
 
     if os.path.exists(fichier_defaut):
         data = pd.read_csv(fichier_defaut)
-        data['date_vente'] = pd.to_datetime(data['date_vente'], format='%d/%m/%Y', errors='coerce')
-        data = data.dropna(subset=['date_vente'])
-        data.set_index('date_vente', inplace=True)
-        # data.set_index('date_vente').resample('M').sum()['prix_total_de_vente'].plot(figsize=(10,6))
-        plt.title('Distribution des prix unitaires de vente')
-        plt.xlabel('Prix Unitaire de Vente')
-        plt.ylabel('Fréquence')
-        
+
+        segmentation = data.groupby('nom_de_la_piece').agg({'quantite': 'sum'}).sort_values(by='quantite', ascending=False)[:50]
+        plt.figure(figsize=(12, 6))
+        sns.barplot(x=segmentation.index, y=segmentation['quantite'])
+        plt.xticks(rotation=90)
+        plt.title('Quantités vendues par produit')
         # data.plot(ax=ax)
         img = io.BytesIO()
         plt.savefig(img, format='png')
         img.seek(0)
         plot_url = base64.b64encode(img.getvalue()).decode('utf8')
-        
+
         return render_template('index.html', plot_url=f'data:image/png;base64,{plot_url}')
     return render_template('index.html', plot_url=None)
 
